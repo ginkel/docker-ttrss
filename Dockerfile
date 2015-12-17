@@ -1,8 +1,8 @@
-FROM ubuntu
-MAINTAINER Christian Lück <christian@lueck.tv>
+FROM nginx:1.9
+MAINTAINER Thilo-Alexander Ginkel <thilo@ginkel.com>
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
-  nginx supervisor php5-fpm php5-cli php5-curl php5-gd php5-json \
+  supervisor php5-fpm php5-cli php5-curl php5-gd php5-json \
   php5-pgsql php5-mysql php5-mcrypt && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # enable the mcrypt module
@@ -10,8 +10,8 @@ RUN php5enmod mcrypt
 
 # add ttrss as the only nginx site
 ADD ttrss.nginx.conf /etc/nginx/sites-available/ttrss
+RUN mkdir /etc/nginx/sites-enabled
 RUN ln -s /etc/nginx/sites-available/ttrss /etc/nginx/sites-enabled/ttrss
-RUN rm /etc/nginx/sites-enabled/default
 
 # install ttrss and patch configuration
 WORKDIR /var/www
