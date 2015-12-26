@@ -20,6 +20,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y curl --n
     && apt-get purge -y --auto-remove curl \
     && chown www-data:www-data -R /var/www
 RUN cp config.php-dist config.php
+WORKDIR /var/tmp
 
 # expose only nginx HTTP port
 EXPOSE 80

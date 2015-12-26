@@ -63,7 +63,7 @@ if (!dbcheck($config)) {
     $super['DB_NAME'] = null;
     $super['DB_USER'] = env('DB_ENV_USER', 'docker');
     $super['DB_PASS'] = env('DB_ENV_PASS', $super['DB_USER']);
-    
+
     $pdo = dbconnect($super);
 
     if ($super['DB_TYPE'] === 'mysql') {
@@ -75,7 +75,7 @@ if (!dbcheck($config)) {
     }
 
     unset($pdo);
-    
+
     if (dbcheck($config)) {
         echo 'Database login created and confirmed' . PHP_EOL;
     } else {
@@ -109,11 +109,11 @@ file_put_contents($confpath, $contents);
 function env($name, $default = null)
 {
     $v = getenv($name) ?: $default;
-    
+
     if ($v === null) {
         error('The env ' . $name . ' does not exist');
     }
-    
+
     return $v;
 }
 
@@ -132,6 +132,7 @@ function dbconnect($config)
             $dsn .= $d . '=' . $config['DB_' . $h] . ';';
         }
     }
+    echo('Failed to connect to ' . $dsn . ' (user = ' . $config['DB_USER'] . ', pw = ' . $config['DB_PASS'] . ')' . PHP_EOL);
     $pdo = new \PDO($dsn, $config['DB_USER'], $config['DB_PASS']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
