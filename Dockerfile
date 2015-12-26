@@ -36,4 +36,5 @@ ENV DB_PASS ttrss
 ADD configure-db.php /configure-db.php
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD entrypoint.sh /
+ADD php-fpm.conf /etc/php5/fpm/
 CMD ["/entrypoint.sh"]
