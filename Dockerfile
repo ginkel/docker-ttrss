@@ -10,7 +10,10 @@ RUN php5enmod mcrypt
 
 # add ttrss as the only nginx site
 ADD ttrss.nginx.conf /etc/nginx/conf.d/ttrss.conf
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf && \
+    sed -i \
+        -e 's/^user  nginx;$/user www-data;/g' \
+        /etc/nginx/nginx.conf
 
 # install ttrss and patch configuration
 WORKDIR /var/www
