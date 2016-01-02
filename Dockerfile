@@ -29,6 +29,6 @@ ENV DB_USER ttrss
 ENV DB_PASS ttrss
 
 # always re-configure database with current ENV when RUNning container, then monitor all services
-ADD entrypoint.d/ /
+ADD entrypoint.d/ /entrypoint.d
 ADD configure-db.php /configure-db.php
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf.d/ttrss-update-daemon.conf
