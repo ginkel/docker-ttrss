@@ -2,6 +2,7 @@
 <?php
 
 $confpath = '/var/www/config.php';
+$confpath_template = '/var/www/config.php-dist';
 
 $config = array();
 
@@ -61,8 +62,8 @@ if (!dbcheck($config)) {
     $super = $config;
 
     $super['DB_NAME'] = null;
-    $super['DB_USER'] = env('DB_ENV_USER', 'docker');
-    $super['DB_PASS'] = env('DB_ENV_PASS', $super['DB_USER']);
+    $super['DB_USER'] = env('DB_USER', 'docker');
+    $super['DB_PASS'] = env('DB_PASS', $super['DB_USER']);
 
     $pdo = dbconnect($super);
 
@@ -100,7 +101,7 @@ catch (PDOException $e) {
     unset($pdo);
 }
 
-$contents = file_get_contents($confpath);
+$contents = file_get_contents($confpath_template);
 foreach ($config as $name => $value) {
     $contents = preg_replace('/(define\s*\(\'' . $name . '\',\s*)(.*)(\);)/', '$1"' . $value . '"$3', $contents);
 }
